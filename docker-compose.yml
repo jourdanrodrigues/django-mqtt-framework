@@ -1,10 +1,29 @@
 services:
 
   server:
-    container_name: dj_mqtt_server
+    container_name: mqtt_framework_server
     build: .
     command: gunicorn -b 0.0.0.0:8000 core.wsgi --log-file -
     environment:
-      - MQTT_BROKER_URI=mqtt[s]://[username][:password]@host.domain[:port]
+      - MQTT_BROKER_URL=mqtt://mqtt_user:mqtt_password@mqtt_broker:1883
     volumes:
       - .:/app
+    links:
+      - mqtt_broker
+
+  mqtt_broker:
+    container_name: mqtt_framework_broker
+    build:
+      context: ./.infra/mosquitto/
+      args:
+        - MQTT_USER=mqtt_user
+        - MQTT_PASSWORD=mqtt_password
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+
+  mqttx:
+    container_name: mqtt_framework_mqttx
+    image: emqx/mqttx-web:latest
+    ports:
+      - "1884:80"
