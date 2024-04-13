@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "dj_mqtt"
+version = "0.0.1"
+description = ""
+authors = ["Jourdan Rodrigues <thiagojourdan@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.12.1"
+django = "*"
+paho-mqtt = "*"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

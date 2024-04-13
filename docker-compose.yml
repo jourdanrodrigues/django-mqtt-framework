@@ -1,0 +1,10 @@
+services:
+
+  server:
+    container_name: dj_mqtt_server
+    build: .
+    command: gunicorn -b 0.0.0.0:8000 core.wsgi --log-file -
+    environment:
+      - MQTT_BROKER_URI=mqtt[s]://[username][:password]@host.domain[:port]
+    volumes:
+      - .:/app

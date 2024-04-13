@@ -1,0 +1,12 @@
+# Files
+.DS_Store
+.env
+*.mo
+*.py[cod]
+
+# Directories
+assets/
+build/
+dist/
+*.egg-info
+.idea/
