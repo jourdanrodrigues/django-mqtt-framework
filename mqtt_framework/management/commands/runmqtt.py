@@ -8,5 +8,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         client = MqttClient.from_settings()
+        client.attach_topic_handlers()
 
         client.loop_forever()
