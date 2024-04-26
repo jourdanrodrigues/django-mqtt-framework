@@ -31,25 +31,23 @@ class TopicHandler:
         return json.loads(payload)
 
     def get_serializer_context(self):
-        return {'message': self.message}
+        return {"message": self.message}
 
     @classmethod
     def _validate_setup(cls) -> None:
         attributes = []
-        if not hasattr(cls, 'serializer_class'):
-            attributes.append('serializer_class')
+        if not hasattr(cls, "serializer_class"):
+            attributes.append("serializer_class")
 
-        topic = getattr(cls, 'topic')
+        topic = getattr(cls, "topic")
         if not isinstance(topic, str) or len(topic) == 0:
-            attributes.append('topic')
+            attributes.append("topic")
 
         if cls.qos not in {0, 1, 2}:
-            attributes.append('qos')
+            attributes.append("qos")
 
         if len(attributes) > 0:
-            raise cls.SetupError(
-                f"Class {cls.__name__} is missing or has invalid attributes: {', '.join(attributes)}"
-            )
+            raise cls.SetupError(f"Class {cls.__name__} is missing or has invalid attributes: {', '.join(attributes)}")
 
     class SetupError(Exception):
         pass

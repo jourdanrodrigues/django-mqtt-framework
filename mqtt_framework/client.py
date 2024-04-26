@@ -1,10 +1,9 @@
 from dataclasses import dataclass
 from functools import cached_property
 from importlib import import_module
-from typing import Any, Literal
 
 from django.conf import settings
-from paho.mqtt.client import Client, MQTTMessage, MQTTv311
+from paho.mqtt.client import Client, MQTTMessage
 from paho.mqtt.enums import CallbackAPIVersion
 
 from mqtt_framework.topic_handler import TopicHandler
@@ -38,9 +37,9 @@ class MqttClient(Client):
         self.on_message = handle_message
 
     @classmethod
-    def from_settings(cls) -> 'MqttClient':
+    def from_settings(cls) -> "MqttClient":
         self = cls(CallbackAPIVersion.VERSION2)
-        keep_alive = getattr(settings, 'MQTT_KEEPALIVE', 60)
+        keep_alive = getattr(settings, "MQTT_KEEPALIVE", 60)
         self.username_pw_set(self.conn.user, self.conn.password)
         self.connect(host=self.conn.host, port=self.conn.port, keepalive=keep_alive)
         return self
@@ -61,7 +60,6 @@ class MqttClient(Client):
             user, password = None, None
             host_port = remaining
 
-        host, port = host_port.split(":") if ":" in host_port else (host_port, '1883')
+        host, port = host_port.split(":") if ":" in host_port else (host_port, "1883")
 
         return ConnectionData(user=user, password=password, host=host, port=int(port))
-

@@ -24,8 +24,8 @@ class TestMqttClient(SimpleTestCase):
         cache.clear()
 
     async def test_that_the_message_callback_works(self):
-        topic = f'mqtt/{uuid4()}'
-        payload = 'Hello, World!'
+        topic = f"mqtt/{uuid4()}"
+        payload = "Hello, World!"
         cache_key = str(uuid4())
         mqtt_client = MqttClient.from_settings()
         mqtt_client.loop_start()
@@ -33,22 +33,24 @@ class TestMqttClient(SimpleTestCase):
 
         @mqtt_client.message_callback()
         def on_message(mqtt_client, userdata, message: MQTTMessage) -> None:
-            cache.set(cache_key, {
-                'topic': message.topic,
-                'decoded_payload': message.payload.decode(),
-                'user_data': userdata,
-            })
+            data = {
+                "topic": message.topic,
+                "decoded_payload": message.payload.decode(),
+                "user_data": userdata,
+            }
+            cache.set(cache_key, data)
 
         mqtt_client.publish(topic, payload)
         await a_moment()
 
         mqtt_client.loop_stop()
 
-        self.assertEqual(cache.get(cache_key), {
-            'topic': topic,
-            'decoded_payload': payload,
-            'user_data': None,
-        })
+        expected_data = {
+            "topic": topic,
+            "decoded_payload": payload,
+            "user_data": None,
+        }
+        self.assertEqual(cache.get(cache_key), expected_data)
 
     async def test_that_the_topic_handler_works(self):
         cache_key = str(uuid4())
@@ -61,13 +63,13 @@ class TestMqttClient(SimpleTestCase):
                 return validated_data
 
         class DjangoMqttHandler(TopicHandler):
-            topic = f'mqtt/{uuid4()}'
+            topic = f"mqtt/{uuid4()}"
             serializer_class = DjangoMqttSerializer
 
         mqtt_client = MqttClient.from_settings()
         mqtt_client.loop_start()
         mqtt_client.attach_topic_handlers()
-        payload = {'test': 'went well'}
+        payload = {"test": "went well"}
 
         mqtt_client.publish(DjangoMqttHandler.topic, json.dumps(payload))
         await a_moment()

@@ -1,5 +1,4 @@
 services:
-
   server:
     container_name: mqtt_framework_server
     build: .

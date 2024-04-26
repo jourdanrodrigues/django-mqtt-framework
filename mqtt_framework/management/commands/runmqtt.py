@@ -6,7 +6,7 @@ from mqtt_framework.client import MqttClient
 
 
 class Command(BaseCommand):
-    help = 'Starts the MQTT listener'
+    help = "Starts the MQTT listener"
 
     def handle(self, *args, **options):
         logger = self._get_logger()
@@ -19,12 +19,12 @@ class Command(BaseCommand):
 
     @staticmethod
     def _get_logger() -> logging.Logger:
-        formatter = logging.Formatter('%(levelname)s: %(message)s')
+        formatter = logging.Formatter("%(levelname)s: %(message)s")
         handler = logging.StreamHandler()
         handler.setFormatter(formatter)
 
         logger = logging.getLogger(__name__)
-        logger.setLevel('INFO')
+        logger.setLevel("INFO")
         logger.addHandler(handler)
 
         return logger
