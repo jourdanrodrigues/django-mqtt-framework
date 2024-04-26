@@ -1,8 +1,10 @@
 from dataclasses import dataclass
+from functools import cached_property
 from importlib import import_module
+from typing import Any, Literal
 
 from django.conf import settings
-from paho.mqtt.client import Client, MQTTMessage
+from paho.mqtt.client import Client, MQTTMessage, MQTTv311
 from paho.mqtt.enums import CallbackAPIVersion
 
 from mqtt_framework.topic_handler import TopicHandler
@@ -38,14 +40,13 @@ class MqttClient(Client):
     @classmethod
     def from_settings(cls) -> 'MqttClient':
         self = cls(CallbackAPIVersion.VERSION2)
-        conn = cls.get_connection_data()
         keep_alive = getattr(settings, 'MQTT_KEEPALIVE', 60)
-        self.username_pw_set(conn.user, conn.password)
-        self.connect(host=conn.host, port=conn.port, keepalive=keep_alive)
+        self.username_pw_set(self.conn.user, self.conn.password)
+        self.connect(host=self.conn.host, port=self.conn.port, keepalive=keep_alive)
         return self
 
-    @staticmethod
-    def get_connection_data() -> ConnectionData:
+    @cached_property
+    def conn(self) -> ConnectionData:
         if settings.MQTT_BROKER_URL is None:
             raise ValueError("MQTT_BROKER_URL is not set")
 
