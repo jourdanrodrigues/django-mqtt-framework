@@ -4,15 +4,10 @@ docker-compose.yml
 Dockerfile
 .dockerignore
 .editorconfig
-.env.example
 .gitignore
-*.py[cod]
-compose.sh
-setup.cfg
 README.md
 .pre-commit-config.yaml
-.devdb
 
 # Directories
 .idea/
-.devdb/
+.dev_data/

@@ -5,14 +5,14 @@ services:
     build: .
     command: gunicorn -b 0.0.0.0:8000 core.wsgi --log-file -
     environment:
-      - MQTT_BROKER_URL=mqtt://mqtt_user:mqtt_password@mqtt_broker:1883
+      - MQTT_BROKER_URL=mqtt://mqtt_user:mqtt_password@mosquitto:1883
     volumes:
       - .:/app
     links:
-      - mqtt_broker
+      - mosquitto
 
-  mqtt_broker:
-    container_name: mqtt_framework_broker
+  mosquitto:
+    container_name: mqtt_framework_mosquitto
     build:
       context: ./.infra/mosquitto/
       args:
@@ -21,6 +21,8 @@ services:
     ports:
       - "1883:1883"
       - "9001:9001"
+    volumes:
+      - ./.dev_data/mosquitto/:/mosquitto/data/
 
   mqttx:
     container_name: mqtt_framework_mqttx
