@@ -59,7 +59,10 @@ class TopicHandler:
 
     @classmethod
     def parse_payload(cls, payload: str):
-        return json.loads(payload)
+        try:
+            return json.loads(payload)
+        except json.decoder.JSONDecodeError:
+            return payload
 
     def get_serializer_instance(self):
         return None
