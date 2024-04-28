@@ -5,10 +5,12 @@ services:
     command: python manage.py runmqtt
     environment:
       - MQTT_BROKER_URL=mqtt://mqtt_user:mqtt_password@mosquitto:1883
+      - CACHE_URL=memcached://memcached:11211
     volumes:
       - .:/app
     links:
       - mosquitto
+      - memcached
 
   mosquitto:
     container_name: mqtt_framework_mosquitto
@@ -22,8 +24,6 @@ services:
     volumes:
       - ./.dev_data/mosquitto/:/mosquitto/data/
 
-  mqttx:
-    container_name: mqtt_framework_mqttx
-    image: emqx/mqttx-web:latest
-    ports:
-      - "1884:80"
+  memcached:
+    container_name: mqtt_framework_memcached
+    image: memcached:1.6-alpine
