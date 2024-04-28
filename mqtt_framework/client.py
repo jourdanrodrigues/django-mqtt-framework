@@ -4,6 +4,7 @@ If you find them anywhere else, please move them here (feel free to turn this in
 """
 
 import json
+import logging
 from dataclasses import dataclass
 from importlib import import_module
 from typing import Optional, Union
@@ -13,6 +14,8 @@ from paho.mqtt.client import Client, MQTTMessage
 from paho.mqtt.enums import CallbackAPIVersion
 
 Payload = Union[dict, list, set, tuple, str, bytes, None]
+
+logger = logging.getLogger("django.server")
 
 
 class Message:
@@ -69,6 +72,7 @@ class MqttClient:
 
     def listen_forever(self) -> None:
         self.attach_topic_handlers()
+        logger.info(f'Listening MQTT events from "{self.conn.host}:{self.conn.port}"')
         self.client.loop_forever()
 
     def publish(self, topic: str, payload: Payload) -> None:
@@ -92,8 +96,12 @@ class MqttClient:
 
         def handle_message(mqtt_client: MqttClient, userdata, message: MQTTMessage) -> None:
             handler = topic_handlers.get(message.topic)
+            log_message = f'Received message to the topic "{message.topic}";'
             if handler is not None:
+                logger.info(f'{log_message} handled by "{handler.__name__}".')
                 handler(message=Message(message)).handle()
+            else:
+                logger.info(f"{log_message} not handled.")
 
         self.client.on_message = handle_message
 
