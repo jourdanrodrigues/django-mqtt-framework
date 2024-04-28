@@ -108,7 +108,7 @@ class MqttClient:
     @staticmethod
     def _build_conn(broker_url: str) -> ConnectionData:
         protocol, remaining = broker_url.split("://")
-        if protocol not in {"mqtt", "mqtts"}:
+        if protocol not in {"mqtt", "mqtts", "ws", "wss"}:
             raise ValueError(f"Invalid protocol for MQTT_BROKER_URL: {protocol}")
 
         if "@" in remaining:
