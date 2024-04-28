@@ -11,11 +11,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         logger = self._get_logger()
 
-        client = MqttClient.from_settings()
-        client.attach_topic_handlers()
+        client = MqttClient()
 
         logger.info(f'Listening MQTT events from "{client.conn.host}:{client.conn.port}"')
-        client.loop_forever()
+        client.listen_forever()
 
     @staticmethod
     def _get_logger() -> logging.Logger:

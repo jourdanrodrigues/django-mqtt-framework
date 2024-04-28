@@ -10,10 +10,7 @@ setup(
         "Development Status :: 3 - Alpha",
         "Environment :: Web Environment",
         "Framework :: Django",
-        "Framework :: Django :: 3.0",
-        "Framework :: Django :: 3.1",
-        "Framework :: Django :: 3.2",
-        "Framework :: Django :: 4.0",
+        "Framework :: Django :: 5.0",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
@@ -32,7 +29,6 @@ setup(
     packages=find_packages(),
     install_requires=[
         "django>=5.0",
-        "djangorestframework>=3.15",
         "paho-mqtt>=2.0",
     ],
 )

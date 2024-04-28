@@ -6,6 +6,6 @@ RUN pip install --no-cache-dir --upgrade pip wheel
 
 ADD setup.py .
 
-RUN pip install -e .
+RUN pip install -e . djangorestframework>=3.15 pydantic>=2.7.1
 
 COPY . .
