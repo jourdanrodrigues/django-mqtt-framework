@@ -1,5 +1,7 @@
 FROM python:3.12.1-alpine
 
+ENV PIP_ROOT_USER_ACTION=ignore
+
 WORKDIR /app/
 
 RUN apk add --no-cache gcc musl-dev libffi-dev libmemcached-dev zlib-dev && \
