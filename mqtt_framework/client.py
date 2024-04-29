@@ -6,12 +6,12 @@ If you find them anywhere else, please move them here (feel free to turn this in
 import json
 import logging
 from dataclasses import dataclass
-from importlib import import_module
 from typing import Optional, Union
 
-from django.conf import settings
 from paho.mqtt.client import Client, MQTTMessage
 from paho.mqtt.enums import CallbackAPIVersion
+
+from mqtt_framework.settings import mqtt_settings
 
 Payload = Union[dict, list, set, tuple, str, bytes, None]
 
@@ -54,15 +54,15 @@ class ConnectionData:
 class MqttClient:
     def __init__(
         self,
-        broker_url=settings.MQTT_BROKER_URL,
+        broker_url=mqtt_settings.BROKER_URL,
         version: CallbackAPIVersion = CallbackAPIVersion.VERSION2,
-        keepalive: int = getattr(settings, "MQTT_KEEPALIVE", 60),
+        keepalive: int = mqtt_settings.KEEPALIVE,
     ):
         if broker_url is None:
             raise ValueError(f'{type(self).__name__} needs a "broker_url"')
 
         self.client = Client(callback_api_version=version)
-        self.conn = self._build_conn(broker_url=settings.MQTT_BROKER_URL)
+        self.conn = self._build_conn(broker_url=broker_url)
         self.client.username_pw_set(self.conn.user, self.conn.password)
         self.client.connect(
             host=self.conn.host,
@@ -83,11 +83,6 @@ class MqttClient:
         This is imported here to allow usage of this file in any other file.
         """
         from mqtt_framework.topic_handler import TopicHandler
-
-        try:
-            import_module(settings.MQTT_TOPIC_HANDLERS)
-        except ModuleNotFoundError:
-            pass
 
         topic_handlers: dict[str, type[TopicHandler]] = {}
         for topic_handler in TopicHandler.__subclasses__():

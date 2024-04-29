@@ -1,7 +1,9 @@
 import json
 import logging
+from typing import TYPE_CHECKING
 
-from mqtt_framework.client import Message
+if TYPE_CHECKING:
+    from mqtt_framework.client import Message
 
 try:
     from pydantic import BaseModel  # type: ignore[import-not-found]
@@ -26,7 +28,7 @@ class TopicHandler:
         cls._validate_setup()
         super().__init_subclass__(**kwargs)
 
-    def __init__(self, *, message: Message):
+    def __init__(self, *, message: "Message"):
         if message.topic != self.topic:
             raise ValueError(f"Topic {message.topic} does not match {self.topic}")
 
