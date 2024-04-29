@@ -37,4 +37,12 @@ setup(
         "django>=3.2",
         "paho-mqtt>=2.0",
     ],
+    extras_require={
+        "dev": [
+            "django-cache-url>=3.4.5",
+            "djangorestframework>=3.15",
+            "pydantic>=2.7.1",
+            "pylibmc>=1.6.3",
+        ],
+    },
 )

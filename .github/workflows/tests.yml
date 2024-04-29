@@ -9,7 +9,18 @@ on:
 jobs:
   tests:
     name: Python ${{ matrix.python-version }}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+    services:
+      memcached:
+        image: memcached:latest
+        ports:
+          - 11211:11211
+        options: --health-cmd="echo stats | nc -q1 localhost 11211 | grep -q 'version\|uptime'"
+
+      mosquitto:
+        image: Dockerfile:.infra/mosquitto/Dockerfile
+        ports:
+          - 1883:1883
 
     strategy:
       matrix:
@@ -44,7 +55,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --upgrade pip
-          pip install coverage codecov-cli django==${{ matrix.django-version }} djangorestframework==${{ matrix.drf-version }} pydantic==${{ matrix.pydantic-version }}
+          pip install coverage codecov-cli django-cache-url>=3.4.5 django==${{ matrix.django-version }} djangorestframework==${{ matrix.drf-version }} pydantic==${{ matrix.pydantic-version }}
 
       - name: Run tests
         run: coverage run manage.py test
