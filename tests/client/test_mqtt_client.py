@@ -5,8 +5,8 @@ from django.core.cache import cache
 from django.test import SimpleTestCase
 from paho.mqtt.client import MQTTMessage
 
+from mqtt_framework import TopicHandler
 from mqtt_framework.client import MqttClient
-from mqtt_framework.topic_handler import TopicHandler
 from tests.utils import a_moment
 
 

@@ -2,7 +2,7 @@ from asyncio import sleep
 
 from django.core.cache import cache
 
-from mqtt_framework.topic_handler import TopicHandler
+from mqtt_framework import TopicHandler
 
 
 async def a_moment() -> None:

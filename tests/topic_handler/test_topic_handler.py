@@ -3,8 +3,8 @@ from uuid import uuid4
 from django.core.cache import cache
 from django.test import SimpleTestCase
 
+from mqtt_framework import TopicHandler
 from mqtt_framework.client import Message
-from mqtt_framework.topic_handler import TopicHandler
 
 
 class TestInit(SimpleTestCase):

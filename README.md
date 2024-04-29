@@ -49,7 +49,7 @@ To run the MQTT listener, you can use the `runmqtt` management command:
 Within `your_app/topic_handlers.py` module, you'll write the topic handlers:
 
 ```python
-from mqtt_framework.topic_handler import TopicHandler
+from mqtt_framework import TopicHandler
 
 
 class TestTopicHandler(TopicHandler):

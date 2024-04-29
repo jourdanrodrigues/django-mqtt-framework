@@ -82,7 +82,7 @@ class MqttClient:
         """
         This is imported here to allow usage of this file in any other file.
         """
-        from mqtt_framework.topic_handler import TopicHandler
+        from mqtt_framework._topic_handler import TopicHandler
 
         topic_handlers: dict[str, type[TopicHandler]] = {}
         for topic_handler in TopicHandler.__subclasses__():
