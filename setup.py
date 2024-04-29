@@ -26,7 +26,7 @@ setup(
     ],
     url="https://github.com/jourdanrodrigues/django-mqtt-framework",
     python_requires=">=3.12",
-    packages=find_packages(),
+    packages=find_packages(include=["mqtt_framework"]),
     install_requires=[
         "django>=5.0",
         "paho-mqtt>=2.0",
