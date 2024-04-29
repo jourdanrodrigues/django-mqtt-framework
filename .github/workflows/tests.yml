@@ -8,7 +8,7 @@ on:
 
 jobs:
   tests:
-    name: Python ${{ matrix.python-version }}
+    name: Testing Python=${{ matrix.python-version }}/Django=${{ matrix.django-version }}/DRF=${{ matrix.drf-version }}/Pydantic=${{ matrix.pydantic-version }}
     runs-on: ubuntu-latest
     services:
       memcached:
@@ -18,7 +18,7 @@ jobs:
         options: --health-cmd="echo stats | nc -q1 localhost 11211 | grep -q 'version\|uptime'"
 
       mosquitto:
-        image: Dockerfile:.infra/mosquitto/Dockerfile
+        image: custom_mosquitto:.infra/mosquitto/Dockerfile
         ports:
           - 1883:1883
 
