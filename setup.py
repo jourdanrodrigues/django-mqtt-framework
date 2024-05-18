@@ -1,5 +1,8 @@
 from setuptools import find_packages, setup
 
+with open(".dev_requires/requirements.txt") as f:
+    dev_dependencies = f.read().strip().split("\n")
+
 setup(
     name="django-mqtt-framework",
     version="0.0.1",
@@ -37,12 +40,5 @@ setup(
         "django>=3.2",
         "paho-mqtt>=2.0",
     ],
-    extras_require={
-        "dev": [
-            "django-cache-url>=3.4.5",
-            "djangorestframework>=3.15",
-            "pydantic>=2.7.1",
-            "pylibmc>=1.6.3",
-        ],
-    },
+    extras_require={"dev": [dev_dependencies]},
 )

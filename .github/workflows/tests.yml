@@ -18,32 +18,18 @@ jobs:
         options: --health-cmd="echo stats | nc -q1 localhost 11211 | grep -q 'version\|uptime'"
 
       mosquitto:
-        image: custom_mosquitto:.infra/mosquitto/Dockerfile
+        image: .infra/mosquitto/Dockerfile  # This is not working
         ports:
           - 1883:1883
 
     strategy:
       matrix:
         python-version:
-          - '3.6'
-          - '3.7'
           - '3.8'
           - '3.9'
           - '3.10'
           - '3.11'
           - '3.12'
-        django-version:
-          - '3.2'
-          - '4.2'
-          - '5.0'
-        drf-version:
-          - '3.11'
-          - '3.12'
-          - '3.13'
-          - '3.14'
-          - '3.15'
-        pydantic-version:
-          - '2.7'
 
     steps:
       - uses: actions/checkout@v4
@@ -54,11 +40,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install --upgrade pip
-          pip install coverage codecov-cli django-cache-url>=3.4.5 django==${{ matrix.django-version }} djangorestframework==${{ matrix.drf-version }} pydantic==${{ matrix.pydantic-version }}
+          pip install --upgrade pip setuptools virtualenv wheel
+          pip install --upgrade coverage codecov-cli tox
 
-      - name: Run tests
-        run: coverage run manage.py test
+      - name: Run tox targets for ${{ matrix.python-version }}
+        run: tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)
 
       - name: Upload coverage
         run: codecov

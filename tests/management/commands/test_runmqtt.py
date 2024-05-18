@@ -18,13 +18,14 @@ class TestCommand(SimpleTestCase):
         cls.process = Popen(["python", "manage.py", "runmqtt"], stdout=PIPE, stderr=STDOUT)  # nosec B603, B607
         try:
             cls.assertLogsMessage("Listening MQTT events from")
-        except Exception:
-            cls.process.terminate()
-            raise
+        except Exception as e:
+            cls.tearDownClass()
+            raise e from None
 
     @classmethod
     def tearDownClass(cls):
         cls.process.terminate()
+        cls.process.__exit__(None, None, None)
 
     def tearDown(self):
         cache.clear()

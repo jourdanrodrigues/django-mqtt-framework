@@ -3,6 +3,7 @@
 .env
 *.mo
 *.py[cod]
+.coverage
 
 # Directories
 assets/
@@ -12,3 +13,4 @@ dist/
 .idea/
 .dev_data/
 node_modules/
+.tox/
