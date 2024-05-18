@@ -7,7 +7,7 @@ from django.core.cache import cache
 from django.test import SimpleTestCase
 
 from mqtt_framework.client import MqttClient
-from tests.utils import TestTopicHandler, a_moment
+from tests.utils import TestTopicHandler
 
 
 class TestCommand(SimpleTestCase):
@@ -29,16 +29,16 @@ class TestCommand(SimpleTestCase):
     def tearDown(self):
         cache.clear()
 
-    async def test_that_it_listens_to_events(self):
+    def test_that_it_listens_to_events(self):
         payload = {"test": str(uuid4())}
 
         MqttClient().publish(TestTopicHandler.topic, payload)  # "TestTopicHandler" is loaded via settings
-        await a_moment()
 
+        self.assertLogsMessage("Received message to the topic")
         self.assertDictEqual(cache.get(TestTopicHandler.topic), payload)
 
     @classmethod
-    def assertLogsMessage(cls, message: str, *, max_iterations: int = 10, interval: float = 0.2) -> None:
+    def assertLogsMessage(cls, message: str, *, max_iterations: int = 10, interval: float = 0.1) -> None:
         poll = select.poll()
         poll.register(cls.process.stdout, select.POLLIN)  # type: ignore[arg-type]
         iterations = 0
