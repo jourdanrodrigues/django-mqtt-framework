@@ -39,6 +39,11 @@ jobs:
           pip install --upgrade pip setuptools virtualenv wheel
           pip install --upgrade coverage tox
 
+      - name: Install `pylibmc` for memcached
+        if: ${{ matrix.python-version == '3.12' }}
+        run: |
+          pip install pylibmc --install-option="--with-libmemcached=/usr/local/"
+
       - name: Get auxiliary services up
         run: docker compose -f docker-compose.yml -f docker-compose-ci.yml up -d mosquitto memcached
 
