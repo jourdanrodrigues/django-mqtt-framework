@@ -2,6 +2,7 @@ import os
 
 from django_cache_url import config
 
+USE_TZ = False
 SECRET_KEY = "fake-key"  # nosec B105
 INSTALLED_APPS = ["mqtt_framework"]
 MQTT_FRAMEWORK = {

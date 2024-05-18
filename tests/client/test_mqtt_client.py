@@ -1,4 +1,5 @@
 import json
+import logging
 from uuid import uuid4
 
 from django.core.cache import cache
@@ -9,6 +10,8 @@ from mqtt_framework import TopicHandler
 from mqtt_framework.client import MqttClient
 from tests.utils import a_moment
 
+logger = logging.getLogger("django.server")
+
 
 class TestInit(SimpleTestCase):
     def test_when_broker_url_is_none_then_raises_exception(self):
@@ -18,6 +21,7 @@ class TestInit(SimpleTestCase):
 
 class TestClient(SimpleTestCase):
     def tearDown(self):
+        logger.setLevel(logging.INFO)
         cache.clear()
 
     async def test_that_the_message_callback_works(self):
@@ -50,6 +54,8 @@ class TestClient(SimpleTestCase):
         self.assertEqual(cache.get(cache_key), expected_data)
 
     async def test_that_the_topic_handlers_get_attached(self):
+        logger.setLevel(logging.WARNING)
+
         cache_key = str(uuid4())
 
         class DjangoMqttHandler(TopicHandler):
