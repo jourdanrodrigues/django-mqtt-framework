@@ -37,7 +37,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --upgrade pip setuptools virtualenv wheel
-          pip install --upgrade coverage codecov-cli tox
+          pip install --upgrade coverage tox
 
       - name: Get auxiliary services up
         run: docker compose -f docker-compose.yml -f docker-compose-ci.yml up -d mosquitto memcached
@@ -45,5 +45,7 @@ jobs:
       - name: Run tox targets for ${{ matrix.python-version }}
         run: tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)
 
-      - name: Upload coverage
-        run: codecovcli do-upload
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
