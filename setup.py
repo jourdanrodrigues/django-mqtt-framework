@@ -8,7 +8,7 @@ with open("README.md") as readme_file:
 
 setup(
     name="python-mqtt-framework",
-    version="0.0.4",
+    version="0.0.3",
     description="An opinionated framework to handle MQTT communication in Python.",
     long_description=readme,
     long_description_content_type="text/markdown",
