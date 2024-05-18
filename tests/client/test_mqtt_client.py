@@ -8,9 +8,10 @@ from paho.mqtt.client import MQTTMessage
 
 from mqtt_framework import TopicHandler
 from mqtt_framework.client import MqttClient
+from mqtt_framework.settings import mqtt_settings
 from tests.utils import a_moment
 
-logger = logging.getLogger("django.server")
+logger = mqtt_settings.get_logger()
 
 
 class TestInit(SimpleTestCase):

@@ -1,30 +1,31 @@
-# Django MQTT framework
+# Python MQTT framework
 
-**An MQTT listener and a friendly MQTT client for Django.**
+**An MQTT listener and a friendly MQTT client.**
 
-[![codecov](https://codecov.io/github/jourdanrodrigues/django-mqtt-framework/graph/badge.svg?token=L3VL6QCO77)](https://codecov.io/github/jourdanrodrigues/django-mqtt-framework)
+[![codecov](https://codecov.io/github/jourdanrodrigues/python-mqtt-framework/graph/badge.svg?token=L3VL6QCO77)](https://codecov.io/github/jourdanrodrigues/python-mqtt-framework)
 
 ---
 
 # Overview
 
-Django MQTT framework is a Django app that provides a simple MQTT listener and a solid client. It is built on top of the [paho-mqtt](https://pypi.org/project/paho-mqtt/) library.
+MQTT framework is a library that provides a simple MQTT listener and a solid client. It is built on top of the [paho-mqtt](https://pypi.org/project/paho-mqtt/) library.
 
 ----
 
 # Requirements
 
-* Python 3.6+
-* Django 5.0, 4.2, 4.1, 4.0, 3.2, 3.1, 3.0
+* Python 3.8+
 
-We **highly recommend** and only officially support the latest patch release of
-each Python and Django series.
+We **highly recommend** and only officially support the latest patch release of each Python series.
 
 # Installation
 
 Install using `pip` (soon)...
 
-    pip install django-mqtt-framework
+    pip install python-mqtt-framework
+
+
+# Django Integration
 
 Add `'mqtt_framework'` to your `INSTALLED_APPS` setting.
 
@@ -35,13 +36,13 @@ INSTALLED_APPS = [
 ]
 ```
 
-# Running the MQTT listener
+## Running the MQTT listener
 
 To run the MQTT listener, you can use the `runmqtt` management command:
 
     python manage.py runmqtt
 
-# Defining topic handlers
+## Defining topic handlers
 
 Within `your_app/topic_handlers.py` module, you'll write the topic handlers:
 
@@ -82,7 +83,7 @@ class PydanticTopicHandler(TopicHandler):
         # Do something with the pydantic_instance
 ```
 
-# Django Settings
+## Settings
 
 ```python
 MQTT_FRAMEWORK = {
@@ -94,4 +95,4 @@ MQTT_FRAMEWORK = {
 
 That's it, we're done!
 
-    ./manage.py runmqtt
+    python manage.py runmqtt

@@ -15,7 +15,7 @@ class TestCommand(SimpleTestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.process = Popen(["python", "manage.py", "runmqtt"], stdout=PIPE, stderr=STDOUT)  # nosec B603, B607
+        cls.process = Popen(["coverage", "run", "manage.py", "runmqtt"], stdout=PIPE, stderr=STDOUT)  # nosec B603, B607
         try:
             cls.assertLogsMessage("Listening MQTT events from")
         except Exception as e:

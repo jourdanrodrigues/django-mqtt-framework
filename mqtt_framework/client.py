@@ -4,7 +4,6 @@ If you find them anywhere else, please move them here (feel free to turn this in
 """
 
 import json
-import logging
 from dataclasses import dataclass
 from typing import Dict, Optional, Type, Union
 
@@ -15,7 +14,7 @@ from mqtt_framework.settings import mqtt_settings
 
 Payload = Union[dict, list, set, tuple, str, bytes, None]
 
-logger = logging.getLogger("django.server")
+logger = mqtt_settings.get_logger()
 
 
 class Message:
