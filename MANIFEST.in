@@ -1,1 +1,1 @@
-include .dev_requires/*
+include requirements-dev.txt

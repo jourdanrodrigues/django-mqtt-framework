@@ -6,10 +6,10 @@ WORKDIR /app/
 
 RUN apk add --no-cache gcc musl-dev libffi-dev libmemcached-dev zlib-dev && \
     apk add --no-cache --virtual .build-deps build-base linux-headers && \
-    pip install --no-cache-dir --upgrade pip wheel && \
+    pip install --no-cache-dir --upgrade pip build && \
     apk del .build-deps
 
-ADD setup.py .
+ADD setup.py requirements-dev.txt ./
 
 RUN pip install --no-cache-dir -e .[dev]
 

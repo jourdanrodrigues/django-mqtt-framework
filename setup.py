@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-with open(".dev_requires/requirements.txt") as f:
+with open("requirements-dev.txt") as f:
     dev_dependencies = f.read().strip().split("\n")
 
 setup(
