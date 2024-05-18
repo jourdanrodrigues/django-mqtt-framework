@@ -1,0 +1,9 @@
+services:
+
+  mosquitto:
+    ports:
+      - "1883:1883"
+
+  memcached:
+    ports:
+      - "11211:11211"

@@ -13,8 +13,8 @@ jobs:
 
     env:
       # See docker-compose.yml
-      MQTT_BROKER_URL: mqtt://mqtt_user:mqtt_password@mosquitto:1883
-      CACHE_URL: memcached://memcached:11211
+      MQTT_BROKER_URL: mqtt://mqtt_user:mqtt_password@localhost:1883
+      CACHE_URL: memcached://localhost:11211
 
     strategy:
       fail-fast: false
@@ -40,7 +40,7 @@ jobs:
           pip install --upgrade coverage codecov-cli tox
 
       - name: Get auxiliary services up
-        run: docker compose up -d mosquitto memcached
+        run: docker compose -f docker-compose.yml -f docker-compose-ci.yml up -d mosquitto memcached
 
       - name: Run tox targets for ${{ matrix.python-version }}
         run: tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)

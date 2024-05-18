@@ -19,13 +19,9 @@ services:
       args:
         - MQTT_USER=mqtt_user
         - MQTT_PASSWORD=mqtt_password
-    ports:
-      - "1883:1883"
     volumes:
       - ./.dev_data/mosquitto/:/mosquitto/data/
 
   memcached:
     container_name: mqtt_framework_memcached
     image: memcached:1.6-alpine
-    ports:
-      - "11211:11211"
