@@ -1,14 +1,14 @@
 # Python MQTT framework
 
-**An MQTT listener and a friendly MQTT client.**
-
+![PyPI - Version](https://img.shields.io/pypi/v/python-mqtt-framework)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/python-mqtt-framework)
 [![codecov](https://codecov.io/github/jourdanrodrigues/python-mqtt-framework/graph/badge.svg?token=L3VL6QCO77)](https://codecov.io/github/jourdanrodrigues/python-mqtt-framework)
 
 ---
 
 # Overview
 
-MQTT framework is a library that provides a simple MQTT listener and a solid client. It is built on top of the [paho-mqtt](https://pypi.org/project/paho-mqtt/) library.
+MQTT framework is a library that provides an opinionated structure for setting up message handlers and publishers for MQTT brokers. It is built on top of the [paho-mqtt](https://pypi.org/project/paho-mqtt/) library.
 
 ----
 
