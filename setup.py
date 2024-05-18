@@ -34,7 +34,7 @@ setup(
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     url="https://github.com/jourdanrodrigues/django-mqtt-framework",
-    python_requires=">=3.12",
+    python_requires=">=3.8",
     packages=find_packages(include=["mqtt_framework"]),
     install_requires=[
         "django>=3.2",

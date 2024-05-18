@@ -7,8 +7,8 @@ on:
   pull_request:
 
 jobs:
-  tests:
-    name: Testing Python=${{ matrix.python-version }}/Django=${{ matrix.django-version }}/DRF=${{ matrix.drf-version }}/Pydantic=${{ matrix.pydantic-version }}
+  run-tests:
+    name: Test With Python ${{ matrix.python-version }}
     runs-on: ubuntu-latest
 
     env:
@@ -27,6 +27,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        name: Check out code
 
       - uses: actions/setup-python@v5
         with:
@@ -37,7 +38,7 @@ jobs:
           pip install --upgrade pip setuptools virtualenv wheel
           pip install --upgrade coverage codecov-cli tox
 
-      - name: Get auxiliar services up
+      - name: Get auxiliary services up
         run: docker compose up -d mosquitto memcached
 
       - name: Run tox targets for ${{ matrix.python-version }}
