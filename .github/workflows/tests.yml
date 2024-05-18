@@ -46,4 +46,4 @@ jobs:
         run: tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)
 
       - name: Upload coverage
-        run: codecov
+        run: codecovcli do-upload
