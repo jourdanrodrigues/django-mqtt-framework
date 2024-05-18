@@ -20,36 +20,17 @@ We **highly recommend** and only officially support the latest patch release of 
 
 # Installation
 
-Install using `pip` (soon)...
+Install using `pip`.
 
     pip install python-mqtt-framework
 
+# Defining topic handlers
 
-# Django Integration
-
-Add `'mqtt_framework'` to your `INSTALLED_APPS` setting.
-
-```python
-INSTALLED_APPS = [
-    # ...
-    'mqtt_framework',
-]
-```
-
-## Running the MQTT listener
-
-To run the MQTT listener, you can use the `runmqtt` management command:
-
-    python manage.py runmqtt
-
-## Defining topic handlers
-
-Within `your_app/topic_handlers.py` module, you'll write the topic handlers:
+This is how you write the topic handlers:
 
 ```python
 from mqtt_framework import TopicHandler
 from rest_framework import serializers
-from django.core.cache import cache
 from pydantic import BaseModel
 
 
@@ -61,7 +42,7 @@ class SimpleTestSerializer(serializers.Serializer):
     testing = serializers.CharField()
 
     def create(self, validated_data):
-        cache.set('test_message', validated_data)
+        print('test_message', validated_data)
         return validated_data
 
 
@@ -82,6 +63,25 @@ class PydanticTopicHandler(TopicHandler):
         pydantic_instance = self.get_validated_payload()
         # Do something with the pydantic_instance
 ```
+
+There's no need to register the topic handlers, the framework will automatically discover them as long as they are imported.
+
+# Django Integration
+
+Add `'mqtt_framework'` to your `INSTALLED_APPS` setting.
+
+```python
+INSTALLED_APPS = [
+    # ...
+    'mqtt_framework',
+]
+```
+
+## Running the MQTT listener
+
+To run the MQTT listener, you can use the `runmqtt` management command:
+
+    python manage.py runmqtt
 
 ## Settings
 
