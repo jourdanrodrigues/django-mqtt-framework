@@ -10,17 +10,11 @@ jobs:
   tests:
     name: Testing Python=${{ matrix.python-version }}/Django=${{ matrix.django-version }}/DRF=${{ matrix.drf-version }}/Pydantic=${{ matrix.pydantic-version }}
     runs-on: ubuntu-latest
-    services:
-      memcached:
-        image: memcached:latest
-        ports:
-          - 11211:11211
-        options: --health-cmd="echo stats | nc -q1 localhost 11211 | grep -q 'version\|uptime'"
 
-      mosquitto:
-        image: .infra/mosquitto/Dockerfile  # This is not working
-        ports:
-          - 1883:1883
+    env:
+      # See docker-compose.yml
+      MQTT_BROKER_URL: mqtt://mqtt_user:mqtt_password@mosquitto:1883
+      CACHE_URL: memcached://memcached:11211
 
     strategy:
       matrix:
@@ -42,6 +36,9 @@ jobs:
         run: |
           pip install --upgrade pip setuptools virtualenv wheel
           pip install --upgrade coverage codecov-cli tox
+
+      - name: Get auxiliar services up
+        run: docker compose up -d mosquitto memcached
 
       - name: Run tox targets for ${{ matrix.python-version }}
         run: tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)

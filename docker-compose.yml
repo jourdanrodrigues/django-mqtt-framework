@@ -27,3 +27,5 @@ services:
   memcached:
     container_name: mqtt_framework_memcached
     image: memcached:1.6-alpine
+    ports:
+      - "11211:11211"
