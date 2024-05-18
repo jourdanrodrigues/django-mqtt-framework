@@ -1,6 +1,8 @@
 # Django MQTT framework
 
-**An MQTT listener and a friendly MQTT client.**
+**An MQTT listener and a friendly MQTT client for Django.**
+
+[![codecov](https://codecov.io/github/jourdanrodrigues/django-mqtt-framework/graph/badge.svg?token=L3VL6QCO77)](https://codecov.io/github/jourdanrodrigues/django-mqtt-framework)
 
 ---
 

@@ -1,12 +1,16 @@
 from setuptools import find_packages, setup
 
-with open("requirements-dev.txt") as f:
-    dev_dependencies = f.read().strip().split("\n")
+with open("requirements-dev.txt") as requirements_file:
+    dev_dependencies = requirements_file.read().strip().split("\n")
+
+with open("README.md") as readme_file:
+    readme = readme_file.read()
 
 setup(
     name="django-mqtt-framework",
     version="0.0.1",
     description="",
+    long_description=readme,
     author="Jourdan Rodrigues",
     author_email="thiagojourdan@gmail.com",
     classifiers=[
