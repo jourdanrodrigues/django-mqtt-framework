@@ -55,15 +55,3 @@ jobs:
         uses: codecov/codecov-action@v4.0.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-
-  create-version-tag:
-    name: Create version tag
-    runs-on: ubuntu-latest
-    needs: run-tests
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Create version tag
-        run: ./scripts/create-version-tag.sh
