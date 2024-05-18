@@ -1,6 +1,6 @@
 import json
 import logging
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Type
 
 if TYPE_CHECKING:
     from mqtt_framework.client import Message
@@ -20,8 +20,8 @@ logger = logging.getLogger(__name__)
 
 class TopicHandler:
     topic: str
-    serializer_class: type[Serializer]
-    pydantic_model: type[BaseModel]
+    serializer_class: Type[Serializer]
+    pydantic_model: Type[BaseModel]
     qos: int = 0
 
     def __init_subclass__(cls, **kwargs):

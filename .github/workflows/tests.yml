@@ -17,6 +17,7 @@ jobs:
       CACHE_URL: memcached://memcached:11211
 
     strategy:
+      fail-fast: false
       matrix:
         python-version:
           - '3.8'

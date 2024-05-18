@@ -6,7 +6,7 @@ If you find them anywhere else, please move them here (feel free to turn this in
 import json
 import logging
 from dataclasses import dataclass
-from typing import Optional, Union
+from typing import Dict, Optional, Type, Union
 
 from paho.mqtt.client import Client, MQTTMessage
 from paho.mqtt.enums import CallbackAPIVersion
@@ -84,7 +84,7 @@ class MqttClient:
         """
         from mqtt_framework._topic_handler import TopicHandler
 
-        topic_handlers: dict[str, type[TopicHandler]] = {}
+        topic_handlers: Dict[str, Type[TopicHandler]] = {}
         for topic_handler in TopicHandler.__subclasses__():
             topic_handlers[topic_handler.topic] = topic_handler
             self.client.subscribe(topic=topic_handler.topic, qos=topic_handler.qos)
