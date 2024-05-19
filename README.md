@@ -77,13 +77,7 @@ INSTALLED_APPS = [
 ]
 ```
 
-## Running the MQTT listener
-
-To run the MQTT listener, you can use the `runmqtt` management command:
-
-    python manage.py runmqtt
-
-## Settings
+Then you add the `MQTT_FRAMEWORK` setting:
 
 ```python
 MQTT_FRAMEWORK = {
@@ -93,6 +87,8 @@ MQTT_FRAMEWORK = {
 }
 ```
 
-That's it, we're done!
+## Running the MQTT listener
+
+To run the MQTT listener, you can use the `runmqtt` management command:
 
     python manage.py runmqtt

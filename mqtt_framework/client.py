@@ -61,7 +61,7 @@ class MqttClient:
             raise ValueError(f'{type(self).__name__} needs a "broker_url"')
 
         self.client = Client(callback_api_version=version)
-        self.conn = self._build_conn(broker_url=broker_url)
+        self.conn = self.build_connection_data(broker_url=broker_url)
         self.client.username_pw_set(self.conn.user, self.conn.password)
         self.client.connect(
             host=self.conn.host,
@@ -100,7 +100,7 @@ class MqttClient:
         self.client.on_message = handle_message
 
     @staticmethod
-    def _build_conn(broker_url: str) -> ConnectionData:
+    def build_connection_data(broker_url: str) -> ConnectionData:
         protocol, remaining = broker_url.split("://")
         if protocol not in {"mqtt", "mqtts", "ws", "wss"}:
             raise ValueError(f"Invalid protocol for MQTT_BROKER_URL: {protocol}")
